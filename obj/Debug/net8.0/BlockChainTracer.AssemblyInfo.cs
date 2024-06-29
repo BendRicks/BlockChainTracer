@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("BlockChainTracer")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3195f2f23f38c0700700f257f759f1a683c257cc")]
 [assembly: System.Reflection.AssemblyProductAttribute("BlockChainTracer")]
 [assembly: System.Reflection.AssemblyTitleAttribute("BlockChainTracer")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

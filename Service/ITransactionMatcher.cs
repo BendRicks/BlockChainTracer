@@ -20,7 +20,7 @@ namespace BlockChainTracer.Service
         /// <param name="transaction">Output transaction</param>
         /// <param name="key">Key, used to pair transactions</param>
         /// <returns>Null if no cross-chain swaps where found, otherwise CrossChainSwap object</returns>
-        static CrossChainSwap PairOutput(IsolatedTransaction transaction, object key) 
+        static CrossChainSwap PairOutput(IsolatedTransaction transaction, object key)
         {
             throw new NotImplementedException();
         }

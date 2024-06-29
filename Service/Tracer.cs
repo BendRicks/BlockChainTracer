@@ -5,7 +5,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using Nethereum.BlockchainProcessing.ProgressRepositories;
-using Nethereum.Hex.HexTypes;
 using Nethereum.Web3;
 
 namespace BlockChainTracer.Service;
@@ -60,7 +59,8 @@ class Tracer : IHostedService
                                     {
                                         await _crossChainSwapContext.CrossChainSwaps.AddAsync(processResults.Item1);
                                         await _crossChainSwapContext.SaveChangesAsync();
-                                    } catch (Exception e)
+                                    }
+                                    catch (Exception e)
                                     {
                                         string message = e.InnerException != null ? e.InnerException.Message : e.Message;
                                         Console.WriteLine("Error inserting cross-chain swap, cause");

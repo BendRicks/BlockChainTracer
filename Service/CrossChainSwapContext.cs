@@ -13,7 +13,6 @@ namespace BlockChainTracer.Service
         public CrossChainSwapContext(IConfiguration configuration)
         {
             _config = configuration;
-            CrossChainSwaps.AsNoTracking();
             Database.EnsureCreated();
         }
 

@@ -10,7 +10,7 @@ namespace BlockChainTracer.Bridges.Across.Event
         public string InputToken { get; set; }
 
         [Parameter("address", "outputToken", 2)]
-        public string OutputToken { get; set;}
+        public string OutputToken { get; set; }
 
         [Parameter("uint256", "inputAmount", 3)]
         public BigInteger InputAmount { get; set; }

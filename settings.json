@@ -19,18 +19,18 @@
             "period": 2000,
             "startBlock": 16442934,
             "endBlock": 0
+        },
+        "polygonpos": {
+            "url": "https://polygon-mainnet.g.alchemy.com/v2/zOOQoe9BC9EWdgurEEyAnfGC0FqInjIi",
+            "supportedBridges" : ["across"],
+            "startBlock": 58747844,
+            "endBlock": 0
+        },
+        "optimism": {
+            "url": "https://opt-mainnet.g.alchemy.com/v2/zOOQoe9BC9EWdgurEEyAnfGC0FqInjIi",
+            "supportedBridges" : ["across"],
+            "startBlock": 122031949,
+            "endBlock": 0
         }
-        // "polygonpos": {
-        //     "url": "https://polygon-mainnet.g.alchemy.com/v2/zOOQoe9BC9EWdgurEEyAnfGC0FqInjIi",
-        //     "supportedBridges" : ["across"],
-        //     "startBlock": 58747844,
-        //     "endBlock": 0
-        // },
-        // "optimism": {
-        //     "url": "https://opt-mainnet.g.alchemy.com/v2/zOOQoe9BC9EWdgurEEyAnfGC0FqInjIi",
-        //     "supportedBridges" : ["across"],
-        //     "startBlock": 122031949,
-        //     "endBlock": 0
-        // }
     }
 }
