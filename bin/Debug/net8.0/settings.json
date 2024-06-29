@@ -1,0 +1,34 @@
+{
+    "dbParams": "Host=localhost;Port=5432;Database=cross_chain_swap_db;Username=postgres;Password=password",
+    "bridges": {
+        "across": {
+            "eventProcessorClassName" : "BlockChainTracer.Bridges.Across.AcrossLogProcessor"
+        }
+    },
+    "chains": {
+        "ethereum": {
+            "url": "https://eth-mainnet.g.alchemy.com/v2/zOOQoe9BC9EWdgurEEyAnfGC0FqInjIi",
+            "supportedBridges" : ["across"],
+            "startBlock": 20197352,
+            "endBlock": 0
+        },
+        "base": {
+            "url": "https://base-mainnet.g.alchemy.com/v2/zOOQoe9BC9EWdgurEEyAnfGC0FqInjIi",
+            "supportedBridges" : ["across"],
+            "startBlock": 16437452,
+            "endBlock": 0
+        }
+        // "polygonpos": {
+        //     "url": "https://polygon-mainnet.g.alchemy.com/v2/zOOQoe9BC9EWdgurEEyAnfGC0FqInjIi",
+        //     "supportedBridges" : ["across"],
+        //     "startBlock": 58747844,
+        //     "endBlock": 0
+        // },
+        // "optimism": {
+        //     "url": "https://opt-mainnet.g.alchemy.com/v2/zOOQoe9BC9EWdgurEEyAnfGC0FqInjIi",
+        //     "supportedBridges" : ["across"],
+        //     "startBlock": 122031949,
+        //     "endBlock": 0
+        // }
+    }
+}
