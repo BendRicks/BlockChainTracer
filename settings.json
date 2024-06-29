@@ -1,4 +1,5 @@
 {
+    "useDatabase": true,
     "dbParams": "Host=localhost;Port=5432;Database=cross_chain_swap_db;Username=postgres;Password=password",
     "bridges": {
         "across": {

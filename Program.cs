@@ -16,7 +16,7 @@ class Program
             {
                 services.AddHostedService<Tracer>().AddSingleton<IConfiguration>(config).AddSingleton<CrossChainSwapContext>()
                 .Configure<Dictionary<string, BridgeConfig>>(config.GetSection("bridges"))
-                .Configure<Dictionary<string, ChainConfig>>(config.GetSection("chains")); //AddSingleton<CrossChainSwapDAO>().
+                .Configure<Dictionary<string, ChainConfig>>(config.GetSection("chains")); 
             }).RunConsoleAsync();
 
     }

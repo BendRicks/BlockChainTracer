@@ -11,6 +11,7 @@ namespace BlockChainTracer.Service;
 
 class Tracer : IHostedService
 {
+    private readonly IConfiguration _config;
     private readonly Dictionary<string, BridgeConfig> _bridgesConfigs;
     private readonly Dictionary<string, ChainConfig> _chainsConfigs;
 
@@ -18,6 +19,7 @@ class Tracer : IHostedService
 
     public Tracer(IConfiguration config, CrossChainSwapContext crossChainSwapContext, IOptions<Dictionary<string, BridgeConfig>> bridgeConfigs, IOptions<Dictionary<string, ChainConfig>> chainsConfigs)
     {
+        _config = config;
         _crossChainSwapContext = crossChainSwapContext;
         _bridgesConfigs = bridgeConfigs.Value;
         _chainsConfigs = chainsConfigs.Value;
@@ -25,7 +27,7 @@ class Tracer : IHostedService
 
     public async Task StartAsync(CancellationToken cancellationToken)
     {
-
+        bool useDatabase = _config["useDatabase"].Equals("True");
         await Parallel.ForEachAsync(_chainsConfigs, async (chainConfig, index) =>
         {
             var thread = new Thread(new ThreadStart(async () =>
@@ -50,22 +52,32 @@ class Tracer : IHostedService
                                 {
                                     processResults.Item1.BridgeName = logProcessor.GetBridgeName();
                                     Console.WriteLine("==============================================================================================================================");
-                                    Console.WriteLine("Bridge: {0}", logProcessor.GetBridgeName());
+                                    
+                                    int swapId;
+                                    if (useDatabase)
+                                    {
+                                        try
+                                        {
+                                            await _crossChainSwapContext.CrossChainSwaps.AddAsync(processResults.Item1);
+                                            swapId = await _crossChainSwapContext.SaveChangesAsync();
+                                            Console.WriteLine("Bridge: {0} \t\tRecord's id in database - {1}", logProcessor.GetBridgeName(), processResults.Item1.Id);
+                                        }
+                                        catch (Exception e)
+                                        {
+                                            string message = e.InnerException != null ? e.InnerException.Message : e.Message;
+                                            Console.WriteLine("Error inserting cross-chain swap, cause: {0}", message);
+                                            Console.WriteLine("Bridge: {0}", logProcessor.GetBridgeName());
+                                        }
+                                    }
+                                    else
+                                    {
+                                        Console.WriteLine("Bridge: {0}", logProcessor.GetBridgeName());
+                                    }                                   
                                     Console.WriteLine("Type: \t\t{0,-72}{1,-72}", "Input", "Output");
                                     Console.WriteLine("Chain: \t\t{0,-72}{1,-72}", processResults.Item1.InputTransaction.ChainName, processResults.Item1.OutputTransaction.ChainName);
                                     Console.WriteLine("Address: \t{0,-72}{1,-72}", processResults.Item1.InputTransaction.AddressFrom, processResults.Item1.OutputTransaction.AddressTo);
                                     Console.WriteLine("TxHash: \t{0,-72}{1,-72}", processResults.Item1.InputTransaction.TransactionHash, processResults.Item1.OutputTransaction.TransactionHash);
                                     Console.WriteLine("==============================================================================================================================");
-                                    try
-                                    {
-                                        await _crossChainSwapContext.CrossChainSwaps.AddAsync(processResults.Item1);
-                                        await _crossChainSwapContext.SaveChangesAsync();
-                                    }
-                                    catch (Exception e)
-                                    {
-                                        string message = e.InnerException != null ? e.InnerException.Message : e.Message;
-                                        Console.WriteLine("Error inserting cross-chain swap, cause");
-                                    }
                                 }
                                 break;
                             }

@@ -6,20 +6,27 @@ namespace BlockChainTracer.Service
 {
     public class CrossChainSwapContext : DbContext
     {
-        
+
         private readonly IConfiguration _config;
         public DbSet<CrossChainSwap> CrossChainSwaps { get; set; }
 
         public CrossChainSwapContext(IConfiguration configuration)
         {
             _config = configuration;
-            Database.EnsureCreated();
+            if (_config["useDatabase"].Equals("True"))
+            {
+                Database.EnsureCreated();
+                Console.WriteLine("Connected to the database");
+            }
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseNpgsql(_config["dbParams"]);
-            optionsBuilder.EnableSensitiveDataLogging();
+            if (_config["useDatabase"].Equals("True"))
+            {
+                optionsBuilder.UseNpgsql(_config["dbParams"]);
+                optionsBuilder.EnableSensitiveDataLogging();
+            }
         }
 
     }

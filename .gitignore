@@ -1,2 +1,4 @@
 /.vscode
-/tracer.db
+/bin
+/obj
+/release
