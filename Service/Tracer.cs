@@ -13,7 +13,6 @@ class Tracer : IHostedService
 {
     private readonly Dictionary<string, BridgeConfig> _bridgesConfigs;
     private readonly Dictionary<string, ChainConfig> _chainsConfigs;
-    // private readonly CrossChainSwapDAO _crossChainSwapDAO;
 
     private readonly CrossChainSwapContext _crossChainSwapContext;
 
@@ -34,7 +33,7 @@ class Tracer : IHostedService
                 var web3 = new Web3(chainConfig.Value.Url);
 
                 ConcurrentBag<ILogProcessor> logProcessors = new(
-                    chainConfig.Value.SupportedBridges.Select(str => (ILogProcessor)Activator.CreateInstance(Type.GetType(_bridgesConfigs[str].EventProcessorClassName)))
+                    chainConfig.Value.SupportedBridges.Select(str => (ILogProcessor)Activator.CreateInstance(Type.GetType(_bridgesConfigs[str].LogProcessorClassName)))
                 );
 
                 var blockProgressRepo = new InMemoryBlockchainProgressRepository();
@@ -51,9 +50,11 @@ class Tracer : IHostedService
                                 {
                                     processResults.Item1.BridgeName = logProcessor.GetBridgeName();
                                     Console.WriteLine("==============================================================================================================================");
-                                    Console.WriteLine("{0}: {1} chain, TxHash {2}, address {3} >>> {4} chain, TxHash {5}, address {6}", processResults.Item1.BridgeName,
-                                        processResults.Item1.InputTransaction.ChainName, processResults.Item1.InputTransaction.TransactionHash, processResults.Item1.InputTransaction.AddressFrom,
-                                        processResults.Item1.OutputTransaction.ChainName, processResults.Item1.OutputTransaction.TransactionHash, processResults.Item1.OutputTransaction.AddressTo);
+                                    Console.WriteLine("Bridge: {0}", logProcessor.GetBridgeName());
+                                    Console.WriteLine("Type: \t\t{0,-72}{1,-72}", "Input", "Output");
+                                    Console.WriteLine("Chain: \t\t{0,-72}{1,-72}", processResults.Item1.InputTransaction.ChainName, processResults.Item1.OutputTransaction.ChainName);
+                                    Console.WriteLine("Address: \t{0,-72}{1,-72}", processResults.Item1.InputTransaction.AddressFrom, processResults.Item1.OutputTransaction.AddressTo);
+                                    Console.WriteLine("TxHash: \t{0,-72}{1,-72}", processResults.Item1.InputTransaction.TransactionHash, processResults.Item1.OutputTransaction.TransactionHash);
                                     Console.WriteLine("==============================================================================================================================");
                                     try
                                     {
@@ -71,11 +72,11 @@ class Tracer : IHostedService
                         }
                     }, blockProgressRepository: blockProgressRepo
                 );
-                // var cancellationTokenSource = new CancellationTokenSource();
                 if (chainConfig.Value.StartBlock == 0 && chainConfig.Value.EndBlock == 0)
                 {
-                    Console.WriteLine("Starting log processor for {0} in realtime", chainConfig.Key);
-                    await processor.ExecuteAsync();
+                    var latestBlock = await web3.Eth.Blocks.GetBlockNumber.SendRequestAsync();
+                    Console.WriteLine("Starting log processor for {0} in realtime (latest block is {1})", chainConfig.Key, latestBlock);
+                    await processor.ExecuteAsync(startAtBlockNumberIfNotProcessed: latestBlock, waitInterval: chainConfig.Value.Period);
                 }
                 else if (chainConfig.Value.StartBlock != 0 && chainConfig.Value.EndBlock == 0)
                 {

@@ -2,7 +2,7 @@
     "dbParams": "Host=localhost;Port=5432;Database=cross_chain_swap_db;Username=postgres;Password=password",
     "bridges": {
         "across": {
-            "eventProcessorClassName" : "BlockChainTracer.Bridges.Across.AcrossLogProcessor"
+            "logProcessorClassName" : "BlockChainTracer.Bridges.Across.AcrossLogProcessor"
         }
     },
     "chains": {
@@ -10,26 +10,26 @@
             "url": "https://eth-mainnet.g.alchemy.com/v2/zOOQoe9BC9EWdgurEEyAnfGC0FqInjIi",
             "supportedBridges" : ["across"],
             "period": 12000,
-            "startBlock": 20198259,
+            "startBlock": 0,
             "endBlock": 0
         },
         "base": {
             "url": "https://base-mainnet.g.alchemy.com/v2/zOOQoe9BC9EWdgurEEyAnfGC0FqInjIi",
             "supportedBridges" : ["across"],
             "period": 2000,
-            "startBlock": 16442934,
+            "startBlock": 0,
             "endBlock": 0
         },
         "polygonpos": {
             "url": "https://polygon-mainnet.g.alchemy.com/v2/zOOQoe9BC9EWdgurEEyAnfGC0FqInjIi",
             "supportedBridges" : ["across"],
-            "startBlock": 58747844,
+            "startBlock": 0,
             "endBlock": 0
         },
         "optimism": {
             "url": "https://opt-mainnet.g.alchemy.com/v2/zOOQoe9BC9EWdgurEEyAnfGC0FqInjIi",
             "supportedBridges" : ["across"],
-            "startBlock": 122031949,
+            "startBlock": 0,
             "endBlock": 0
         }
     }

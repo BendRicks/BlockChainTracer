@@ -7,6 +7,6 @@ namespace BlockChainTracer.Model
 {
     public class BridgeConfig
     {
-        public string EventProcessorClassName { get; set; }
+        public string LogProcessorClassName { get; set; }
     }
 }
