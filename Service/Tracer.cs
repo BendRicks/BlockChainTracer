@@ -52,14 +52,13 @@ class Tracer : IHostedService
                                 {
                                     processResults.Item1.BridgeName = logProcessor.GetBridgeName();
                                     Console.WriteLine("==============================================================================================================================");
-                                    
-                                    int swapId;
+
                                     if (useDatabase)
                                     {
                                         try
                                         {
                                             await _crossChainSwapContext.CrossChainSwaps.AddAsync(processResults.Item1);
-                                            swapId = await _crossChainSwapContext.SaveChangesAsync();
+                                            await _crossChainSwapContext.SaveChangesAsync();
                                             Console.WriteLine("Bridge: {0} \t\tRecord's id in database - {1}", logProcessor.GetBridgeName(), processResults.Item1.Id);
                                         }
                                         catch (Exception e)
@@ -72,7 +71,7 @@ class Tracer : IHostedService
                                     else
                                     {
                                         Console.WriteLine("Bridge: {0}", logProcessor.GetBridgeName());
-                                    }                                   
+                                    }
                                     Console.WriteLine("Type: \t\t{0,-72}{1,-72}", "Input", "Output");
                                     Console.WriteLine("Chain: \t\t{0,-72}{1,-72}", processResults.Item1.InputTransaction.ChainName, processResults.Item1.OutputTransaction.ChainName);
                                     Console.WriteLine("Address: \t{0,-72}{1,-72}", processResults.Item1.InputTransaction.AddressFrom, processResults.Item1.OutputTransaction.AddressTo);
@@ -94,7 +93,8 @@ class Tracer : IHostedService
                 {
                     Console.WriteLine("Starting log processor for {0} for blocks from {1}", chainConfig.Key, chainConfig.Value.StartBlock);
                     await processor.ExecuteAsync(
-                    startAtBlockNumberIfNotProcessed: new BigInteger(chainConfig.Value.StartBlock));
+                    startAtBlockNumberIfNotProcessed: new BigInteger(chainConfig.Value.StartBlock),
+                    waitInterval: chainConfig.Value.Period);
                 }
                 else
                 {

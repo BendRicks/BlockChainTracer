@@ -7,32 +7,30 @@ using System.Numerics;
 using System.Threading.Tasks;
 using Npgsql.PostgresTypes;
 
-namespace BlockChainTracer.Model
+namespace BlockChainTracer.Model;
+public class CrossChainSwap
 {
-    public class CrossChainSwap
+    public long Id { get; set; }
+    public IsolatedTransaction InputTransaction { get; set; }
+    public IsolatedTransaction OutputTransaction { get; set; }
+    public string BridgeName { get; set; }
+    public DateTime DateTime { get; set; }
+
+    public CrossChainSwap(IsolatedTransaction inputTransaction, IsolatedTransaction outputTransaction, string bridgeName, DateTime dateTime)
     {
-        public long Id { get; set; }
-        public IsolatedTransaction InputTransaction { get; set; }
-        public IsolatedTransaction OutputTransaction { get; set; }
-        public string BridgeName { get; set; }
-        public DateTime DateTime { get; set; }
-
-        public CrossChainSwap(IsolatedTransaction inputTransaction, IsolatedTransaction outputTransaction, string bridgeName, DateTime dateTime)
-        {
-            InputTransaction = inputTransaction;
-            OutputTransaction = outputTransaction;
-            BridgeName = bridgeName;
-            DateTime = dateTime;
-        }
-
-        public CrossChainSwap(IsolatedTransaction inputTransaction, IsolatedTransaction outputTransaction, DateTime dateTime)
-        {
-            InputTransaction = inputTransaction;
-            OutputTransaction = outputTransaction;
-            DateTime = dateTime;
-        }
-
-        public CrossChainSwap() { }
-
+        InputTransaction = inputTransaction;
+        OutputTransaction = outputTransaction;
+        BridgeName = bridgeName;
+        DateTime = dateTime;
     }
+
+    public CrossChainSwap(IsolatedTransaction inputTransaction, IsolatedTransaction outputTransaction, DateTime dateTime)
+    {
+        InputTransaction = inputTransaction;
+        OutputTransaction = outputTransaction;
+        DateTime = dateTime;
+    }
+
+    public CrossChainSwap() { }
+
 }

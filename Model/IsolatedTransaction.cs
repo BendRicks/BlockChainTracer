@@ -1,15 +1,18 @@
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Numerics;
+namespace BlockChainTracer.Model;
 
-namespace BlockChainTracer.Model
+public class IsolatedTransaction
 {
-    public class IsolatedTransaction(string chainName, string transactionHash, string addressFrom, string addressTo)
+    public long Id { get; set; }
+    public string TransactionHash { get; set; }
+    public string ChainName { get; set; }
+    public string AddressFrom { get; set; }
+    public string AddressTo { get; set; }
+
+    public IsolatedTransaction(string chainName, string transactionHash, string addressFrom, string addressTo)
     {
-        public long Id { get; set; }
-        public string TransactionHash { get; set; } = transactionHash;
-        public string ChainName { get; set; } = chainName;
-        public string AddressFrom { get; set; } = addressFrom;
-        public string AddressTo { get; set; } = addressTo;
+        TransactionHash = transactionHash;
+        ChainName = chainName;
+        AddressFrom = addressFrom;
+        AddressTo = addressTo;
     }
 }
