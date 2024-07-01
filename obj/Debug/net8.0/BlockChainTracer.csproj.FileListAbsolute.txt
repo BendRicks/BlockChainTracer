@@ -72,3 +72,4 @@ D:\test tasks\BlockChainTracer\obj\Debug\net8.0\refint\BlockChainTracer.dll
 D:\test tasks\BlockChainTracer\obj\Debug\net8.0\BlockChainTracer.pdb
 D:\test tasks\BlockChainTracer\obj\Debug\net8.0\BlockChainTracer.genruntimeconfig.cache
 D:\test tasks\BlockChainTracer\obj\Debug\net8.0\ref\BlockChainTracer.dll
+D:\test tasks\BlockChainTracer\obj\Debug\net8.0\BlockChainTracer.sourcelink.json
